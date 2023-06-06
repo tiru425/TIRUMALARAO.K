@@ -1,0 +1,71 @@
+Advanced Physical Design Using OpenLANE/Sky130 nm
+Using Openlane/sky130nm technology we can create a GDSII file from RTL file. We are taken picorv32a.v and create a GDSII file from RTL file.
+Table of Contents
+1.	Inception of Opensource EDA
+•	Understanding of converting RTL synthesis to GDSII file
+1.	SoC design
+2.	Opensource EDA tools
+In this we have to select the folder (example -- picorv32a)
+3.	Prepare the design files
+Commands are
+Go to the designs---docker—pwd, and enter command is ls -ltr then we get flow.tcl file
+Interactive this flow.tcl file means
+./flow.tcl -interactive
+**/ preparation design/**
+prep -design picorv32a
+.
+.
+.
+Preparation complete
+                           4.we can see the new file in picorv32a by enter ls -ltr.
+•	First step is synthesis verification 
+Command is run_synthesis
+We can find a new file i.e picorv32a.synthesis.v--------synthesis mapping is done---this is results part
+Timing Report----
+Last report generated in yosys gives the actual synthesis static report
+Command for timing report is  opensta_main.timing.rpt.
+
+    2.Floorplan 
+	floorplan
+	all logic gates are standard cells
+	Utilization Factor =ratio of Area occupied by the netlist to the total area of the core
+	 Aspect Ratio=height/width
+	Pre-placed cells: These are the cells which are designed only once and can be instantiated number of times. Floorplan of these cells are done before placement & routing. Once placement of these cells is done then no movements will happen.
+	Decoupling capacitors: placed between supply and macros for providing proper supply to the macros.
+	Power Planning: 1. ground bounce 2. voltage drops
+Let us consider number macros for which we have to place no. of decoupling capacitors.
+	Pin Placement: pin information between die and core  
+Mode=1 means, gap between each and every two pins are equal.
+	Command for floorplan ---run_floorplan
+We can see the floorplan diagram with help of magic
+3.Placement: Placing cells on floorplan rows aligned with sites
+	Global Placement: for optimal position of cells (not necessarily legal)
+	Detailed Placement: for legal positions
+	Clock Tree Synthesis: To deliver the clock to all Sequential Elements 
+4.Routing: Implement the interconnect using the available metal.
+	global routing: Generate routing guides.
+	detailed routing: Uses routing Guides to implement actual wiring.
+5.Signoff: Physical (DRC, LVS) and Timing verifications (STA)
+ 
+From above figure, compiler converts human understanding languages like c,c++,Verilog into instructions in Assembly and Assembler converts instructions into binary language in the form of binary ‘1’ and ‘0’.
+Components of opensource digital ASIC design
+The Application Specific Integrated Circuit (ASIC) requires three enablers or elements 
+•	Resistor Transistor Logic Intellectual Property (RTL IPs), 
+•	Electronic Design Automation (EDA) Tools 
+•	Process Design Kit (PDK) data.
+ 
+•	Opensource RTL Designs: github, librecores, opencores
+•	Opensource EDA tools: QFlow, OpenROAD, OpenLANE
+•	Opensource PDK data: Google Skywater130 PDK
+Simplified RTL2GDS Flow 
+•	Synthesis: RTL Converted to gate level netlist using standard cell libraries (SCL).
+•	Floor & Power Planning:Planning defines the size of the chip/block,preplacing Hard Macros and thereby detemining the routing areas between them.Power Planning provide power ti evary Macros,standard cells.It connects Power to chip by considering isssues like EM and IR Drop.
+•	Placement: Placing cells on floorplan rows aligned with sites
+o	Global Placement: for optimal position of cells(not necessary legal)
+o	Detailed Placement: for legal positions
+o	Clock Tree Synthesis: To deliver the clock to all Sequential Elements
+•	Routing: Implement the interconnect using the available metal.
+o	Global Routing: Generate routing guides.
+o	Detailed Routing: Uses routing Guides to implement actual wiring.
+•	Signoff: Physical (DRC, LVS) and Timing verifications
+
